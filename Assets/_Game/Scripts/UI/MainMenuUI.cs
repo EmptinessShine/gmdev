@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TD.Audio;
 using TD.Data;
 using TD.Save;
 
@@ -20,6 +21,11 @@ namespace TD.UI
         [SerializeField] private Button confirmResetYesButton;
         [SerializeField] private Button confirmResetCancelButton;
 
+        [Header("Settings")]
+        [SerializeField] private Button settingsButton;
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private Button closeSettingsButton;
+
         private void Start()
         {
             Time.timeScale = 1f;
@@ -37,7 +43,11 @@ namespace TD.UI
             if (confirmResetYesButton != null) confirmResetYesButton.onClick.AddListener(ConfirmReset);
             if (confirmResetCancelButton != null) confirmResetCancelButton.onClick.AddListener(CloseResetConfirm);
 
+            if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
+            if (closeSettingsButton != null) closeSettingsButton.onClick.AddListener(CloseSettings);
+
             if (confirmResetPanel != null) confirmResetPanel.SetActive(false);
+            if (settingsPanel != null) settingsPanel.SetActive(false);
             RefreshLevelButtons();
         }
 
@@ -73,6 +83,7 @@ namespace TD.UI
 
         private void StartLevel(int index)
         {
+            AudioManager.Instance?.PlayUIClick();
             if (SaveManager.Instance != null)
             {
                 SaveManager.Instance.SelectedLevelIndex = index;
@@ -82,22 +93,37 @@ namespace TD.UI
 
         private void OpenResetConfirm()
         {
+            AudioManager.Instance?.PlayUIClick();
             if (confirmResetPanel != null) confirmResetPanel.SetActive(true);
         }
 
         private void CloseResetConfirm()
         {
+            AudioManager.Instance?.PlayUIClick();
             if (confirmResetPanel != null) confirmResetPanel.SetActive(false);
         }
 
         private void ConfirmReset()
         {
+            AudioManager.Instance?.PlayUIClick();
             if (SaveManager.Instance != null)
             {
                 SaveManager.Instance.ResetProgress();
             }
             CloseResetConfirm();
             RefreshLevelButtons();
+        }
+
+        private void OpenSettings()
+        {
+            AudioManager.Instance?.PlayUIClick();
+            if (settingsPanel != null) settingsPanel.SetActive(true);
+        }
+
+        private void CloseSettings()
+        {
+            AudioManager.Instance?.PlayUIClick();
+            if (settingsPanel != null) settingsPanel.SetActive(false);
         }
     }
 }

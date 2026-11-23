@@ -9,6 +9,9 @@ namespace TD.Save
     {
         public static SaveManager Instance { get; private set; }
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatic() => Instance = null;
+
         [SerializeField] private LevelData[] levels;
 
         public static string SaveFilePath => Path.Combine(Application.persistentDataPath, "save.json");
@@ -181,6 +184,14 @@ namespace TD.Save
         private void OnApplicationQuit()
         {
             Save();
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
         }
     }
 }

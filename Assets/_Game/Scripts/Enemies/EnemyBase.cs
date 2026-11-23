@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using TD.Audio;
 using TD.Core;
 using TD.Data;
 using TD.UI;
@@ -173,7 +174,7 @@ namespace TD.Enemies
             if (audioSource == null) return;
 
             AudioClip clip = windUpClip != null ? windUpClip : GetFallbackBeep();
-            audioSource.pitch = pitch;
+            audioSource.pitch = pitch * UnityEngine.Random.Range(0.92f, 1.08f);
             audioSource.PlayOneShot(clip, 0.45f);
         }
 
@@ -223,6 +224,8 @@ namespace TD.Enemies
                 DamagePopup.Spawn(damagePopupPrefab, transform.position + Vector3.up * 1.4f, amount, wasReduced);
             }
 
+            AudioManager.Instance?.PlayHit();
+
             if (currentHp <= 0f)
             {
                 Die();
@@ -256,6 +259,9 @@ namespace TD.Enemies
                 GameManager.Instance.AddGold(data.goldReward);
                 GameManager.Instance.NotifyEnemyDefeated();
             }
+
+            AudioManager.Instance?.PlayDeath();
+            AudioManager.Instance?.PlayPickup();
 
             OnDied?.Invoke(this);
             Destroy(gameObject);

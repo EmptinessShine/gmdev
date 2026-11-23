@@ -22,4 +22,23 @@
 - `Scripts/` (`Core`, `Towers`, `Enemies`, `Data`, `Save`, `Audio`, `VFX`, `UI`)
 
 ## Audio Sources & Licenses (A12)
-*(Будет заполнено на этапе A12 при добавлении музыкальных треков и SFX.)*
+Все 16 аудиофайлов (2 музыкальных трека + 14 SFX) сгенерированы процедурным PCM-синтезом специально для данного проекта (`22050 Hz, 16-bit mono WAV`).
+
+| Файл | Назначение | Источник / Формат | Лицензия |
+|---|---|---|---|
+| `Assets/_Game/Audio/Music/Music_Menu.wav` | Фоновая музыка главного меню (8 с луп) | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/Music/Music_Battle.wav` | Фоновая музыка боя (8 с луп) | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Build.wav` | Постройка башни | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Upgrade.wav` | Улучшение башни | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Sell.wav` | Продажа башни | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Shoot_Gunner.wav` | Выстрел Gunner | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Shoot_Sniper.wav` | Выстрел Sniper | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Shoot_Slow.wav` | Выстрел Slow | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Hit.wav` | Попадание по врагу | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Pickup.wav` | Начисление золота за убийство | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_WindUp.wav` | Wind-up врагов перед атакой/способностью | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Death.wav` | Смерть врага | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Freeze.wav` | Заморозка башни Магом | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_UIClick.wav` | Клик по UI-кнопкам | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Win.wav` | Победа на уровне | Авторский синтез (Python PCM WAV) | CC0 1.0 |
+| `Assets/_Game/Audio/SFX/SFX_Lose.wav` | Поражение на уровне | Авторский синтез (Python PCM WAV) | CC0 1.0 |

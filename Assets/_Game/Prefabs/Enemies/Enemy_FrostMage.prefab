@@ -347,7 +347,7 @@ AudioSource:
   m_GameObject: {fileID: 2077036535143861730}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5843175590577196049, guid: 285d8a1bce839bb47af92cb1bba8f9d8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TD.Enemies.FrostMageEnemy
   data: {fileID: 11400000, guid: 26b3a3d1a14ca914aa38356c5f71c770, type: 2}
   audioSource: {fileID: 7352814444007984539}
-  windUpClip: {fileID: 0}
+  windUpClip: {fileID: 8300000, guid: 2bf38e586550bdf4aa7fd5dd86c3efff, type: 3}
   visualRoot: {fileID: 0}
   damagePopupPrefab: {fileID: 1609110006452894811, guid: f1b13193b60570a48849c184181c13c8, type: 3}
   towerLayer:

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TD.Audio;
 using TD.Data;
 using TD.Save;
 
@@ -17,6 +18,9 @@ namespace TD.Core
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatic() => Instance = null;
 
         [SerializeField] private GameConfig config;
         [SerializeField] private LevelLoader levelLoader;
@@ -56,6 +60,14 @@ namespace TD.Core
         private void OnDisable()
         {
             Time.timeScale = 1f;
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
         }
 
         public void RegisterTotalEnemies(int count)
@@ -141,12 +153,14 @@ namespace TD.Core
             if (!HasNextLevel) return;
             SaveManager.Instance.SelectedLevelIndex = ActiveLevel.levelIndex + 1;
             Time.timeScale = 1f;
+            AudioManager.Instance?.SetPaused(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         public void ReturnToMenu()
         {
             Time.timeScale = 1f;
+            AudioManager.Instance?.SetPaused(false);
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -156,17 +170,20 @@ namespace TD.Core
             {
                 Time.timeScale = 0f;
                 SetState(GameState.Paused);
+                AudioManager.Instance?.SetPaused(true);
             }
             else if (State == GameState.Paused)
             {
                 Time.timeScale = 1f;
                 SetState(GameState.Playing);
+                AudioManager.Instance?.SetPaused(false);
             }
         }
 
         public void RestartLevel()
         {
             Time.timeScale = 1f;
+            AudioManager.Instance?.SetPaused(false);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -178,6 +195,8 @@ namespace TD.Core
             }
 
             State = newState;
+            if (State == GameState.Won) AudioManager.Instance?.PlayWin();
+            else if (State == GameState.Lost) AudioManager.Instance?.PlayLose();
             OnStateChanged?.Invoke(State);
         }
     }

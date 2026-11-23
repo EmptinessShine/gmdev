@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using TD.Audio;
 using TD.Core;
 using TD.Data;
 using TD.Enemies;
@@ -90,6 +91,7 @@ namespace TD.Towers
 
             freezeTimer = Mathf.Max(freezeTimer, duration);
             if (frozenVisual != null) frozenVisual.SetActive(true);
+            AudioManager.Instance?.PlayFreeze();
             OnFrozen?.Invoke(duration);
         }
 
@@ -194,6 +196,7 @@ namespace TD.Towers
             Transform spawn = firePoint != null ? firePoint : transform;
             Projectile proj = Instantiate(Data.projectilePrefab, spawn.position, spawn.rotation);
             proj.Init(target, CurrentStats);
+            AudioManager.Instance?.PlayShoot(Data.towerName);
             OnFired?.Invoke();
         }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TD.Audio;
 using TD.Data;
 using TD.Towers;
 
@@ -50,6 +51,7 @@ namespace TD.Core
             CurrentTower = Instantiate(towerData.prefab, anchor.position, anchor.rotation);
             CurrentTower.Initialize(towerData);
             CurrentTower.SetRangeVisible(isSelected);
+            AudioManager.Instance?.PlayBuild();
             return true;
         }
 
@@ -67,6 +69,7 @@ namespace TD.Core
             }
 
             CurrentTower.Upgrade();
+            AudioManager.Instance?.PlayUpgrade();
             return true;
         }
 
@@ -91,6 +94,7 @@ namespace TD.Core
             GameManager.Instance.AddGold(refund);
             Destroy(CurrentTower.gameObject);
             CurrentTower = null;
+            AudioManager.Instance?.PlaySell();
             return true;
         }
     }

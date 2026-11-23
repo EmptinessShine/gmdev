@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TD.Audio;
 using TD.Core;
 using TD.Data;
 using TD.Towers;
@@ -97,6 +98,7 @@ namespace TD.UI
 
         private void OnBuildClicked(int index)
         {
+            AudioManager.Instance?.PlayUIClick();
             if (currentSlot == null || availableTowers == null || index < 0 || index >= availableTowers.Length)
             {
                 return;
@@ -110,6 +112,7 @@ namespace TD.UI
 
         private void OnUpgradeClicked()
         {
+            AudioManager.Instance?.PlayUIClick();
             if (currentSlot != null && currentSlot.TryUpgrade())
             {
                 RefreshUI();
@@ -118,6 +121,7 @@ namespace TD.UI
 
         private void OnSellClicked()
         {
+            AudioManager.Instance?.PlayUIClick();
             if (currentSlot != null && currentSlot.TrySell())
             {
                 if (slotSelector != null)

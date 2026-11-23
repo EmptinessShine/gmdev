@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TD.Audio;
 using TD.Core;
 
 namespace TD.UI
@@ -44,15 +45,15 @@ namespace TD.UI
             gm.OnWaveChanged += UpdateWave;
             gm.OnStateChanged += UpdateStatePanels;
 
-            if (pauseButton != null) pauseButton.onClick.AddListener(gm.TogglePause);
-            if (resumeButton != null) resumeButton.onClick.AddListener(gm.TogglePause);
-            if (pauseRestartButton != null) pauseRestartButton.onClick.AddListener(gm.RestartLevel);
-            if (pauseMenuButton != null) pauseMenuButton.onClick.AddListener(gm.ReturnToMenu);
-            if (nextLevelButton != null) nextLevelButton.onClick.AddListener(gm.LoadNextLevel);
-            if (winRestartButton != null) winRestartButton.onClick.AddListener(gm.RestartLevel);
-            if (winMenuButton != null) winMenuButton.onClick.AddListener(gm.ReturnToMenu);
-            if (loseRestartButton != null) loseRestartButton.onClick.AddListener(gm.RestartLevel);
-            if (loseMenuButton != null) loseMenuButton.onClick.AddListener(gm.ReturnToMenu);
+            if (pauseButton != null) pauseButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.TogglePause(); });
+            if (resumeButton != null) resumeButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.TogglePause(); });
+            if (pauseRestartButton != null) pauseRestartButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.RestartLevel(); });
+            if (pauseMenuButton != null) pauseMenuButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.ReturnToMenu(); });
+            if (nextLevelButton != null) nextLevelButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.LoadNextLevel(); });
+            if (winRestartButton != null) winRestartButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.RestartLevel(); });
+            if (winMenuButton != null) winMenuButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.ReturnToMenu(); });
+            if (loseRestartButton != null) loseRestartButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.RestartLevel(); });
+            if (loseMenuButton != null) loseMenuButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.ReturnToMenu(); });
 
             if (levelText != null && gm.ActiveLevel != null)
             {
