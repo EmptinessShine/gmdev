@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TD.Data;
+using TD.Save;
 
 namespace TD.Core
 {
@@ -18,8 +19,10 @@ namespace TD.Core
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private GameConfig config;
+        [SerializeField] private LevelLoader levelLoader;
 
         public GameConfig Config => config;
+        public LevelData ActiveLevel { get; private set; }
         public int Gold { get; private set; }
         public int BaseHp { get; private set; }
         public int RemainingEnemies { get; private set; }
@@ -44,8 +47,9 @@ namespace TD.Core
             Instance = this;
             Time.timeScale = 1f;
 
-            Gold = config != null ? config.startingGold : 0;
-            BaseHp = config != null ? config.startingBaseHp : 1;
+            ActiveLevel = levelLoader != null ? levelLoader.LoadActiveLevel() : null;
+            Gold = ActiveLevel != null ? ActiveLevel.startingGold : (config != null ? config.startingGold : 0);
+            BaseHp = ActiveLevel != null ? ActiveLevel.startingBaseHp : (config != null ? config.startingBaseHp : 1);
             State = GameState.Playing;
         }
 
@@ -118,8 +122,32 @@ namespace TD.Core
 
             if (RemainingEnemies == 0 && State == GameState.Playing && BaseHp > 0)
             {
+                if (SaveManager.Instance != null)
+                {
+                    int idx = ActiveLevel != null ? ActiveLevel.levelIndex : 0;
+                    SaveManager.Instance.RecordLevelWin(idx, BaseHp);
+                }
                 SetState(GameState.Won);
             }
+        }
+
+        public bool HasNextLevel =>
+            SaveManager.Instance != null &&
+            ActiveLevel != null &&
+            ActiveLevel.levelIndex + 1 < SaveManager.Instance.LevelCount;
+
+        public void LoadNextLevel()
+        {
+            if (!HasNextLevel) return;
+            SaveManager.Instance.SelectedLevelIndex = ActiveLevel.levelIndex + 1;
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        public void ReturnToMenu()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("MainMenu");
         }
 
         public void TogglePause()

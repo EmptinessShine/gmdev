@@ -18,6 +18,18 @@ namespace TD.Enemies
         private float waveDelayTimer;
         private bool waitingNextWave;
 
+        public void Configure(WaveSetData newWaveSet)
+        {
+            waveSet = newWaveSet;
+            waveIndex = 0;
+            entryIndex = 0;
+            spawnedInEntry = 0;
+            aliveInWave = 0;
+            spawnTimer = 0f;
+            waveDelayTimer = 0f;
+            waitingNextWave = false;
+        }
+
         private void Start()
         {
             if (GameManager.Instance == null || waveSet == null || waveSet.waves == null || waveSet.waves.Length == 0)
@@ -89,7 +101,8 @@ namespace TD.Enemies
         {
             if (prefab == null || spawnPoint == null) return;
 
-            EnemyBase enemy = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+            Vector3 jitter = new Vector3(Random.Range(-0.2f, 0.2f), 0f, Random.Range(-0.2f, 0.2f));
+            EnemyBase enemy = Instantiate(prefab, spawnPoint.position + jitter, spawnPoint.rotation);
             aliveInWave++;
             enemy.OnDied += HandleEnemyDied;
             enemy.Initialize(basePoint);

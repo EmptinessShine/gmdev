@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TD.Core;
 using TD.Data;
+using TD.UI;
 
 namespace TD.Enemies
 {
@@ -13,6 +14,7 @@ namespace TD.Enemies
         [SerializeField] protected AudioSource audioSource;
         [SerializeField] protected AudioClip windUpClip;
         [SerializeField] protected Transform visualRoot;
+        [SerializeField] protected DamagePopup damagePopupPrefab;
 
         protected NavMeshAgent agent;
         protected Transform baseTarget;
@@ -32,6 +34,8 @@ namespace TD.Enemies
         public event Action<EnemyBase> OnDied;
         public event Action OnWindUpStarted;
         public event Action OnAttackPerformed;
+        public event Action<float, float> OnHealthChanged;
+        public event Action<float, bool> OnDamaged;
 
         protected virtual void Awake()
         {
@@ -52,9 +56,15 @@ namespace TD.Enemies
 
             agent.speed = data.moveSpeed;
             agent.stoppingDistance = data.attackRange;
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+            agent.autoBraking = false;
+            agent.angularSpeed = 360f;
+            agent.acceleration = 20f;
+            agent.autoRepath = true;
             SetVisualPulse(1f);
+            OnHealthChanged?.Invoke(currentHp, data.maxHp);
 
-            if (baseTarget != null)
+            if (baseTarget != null && agent.isOnNavMesh)
             {
                 agent.SetDestination(baseTarget.position);
             }
@@ -131,7 +141,12 @@ namespace TD.Enemies
         {
             if (baseTarget == null || !agent.isOnNavMesh) return;
             agent.isStopped = false;
-            agent.SetDestination(baseTarget.position);
+            if (!agent.hasPath ||
+                agent.pathStatus != NavMeshPathStatus.PathComplete ||
+                (agent.destination - baseTarget.position).sqrMagnitude > 0.25f)
+            {
+                agent.SetDestination(baseTarget.position);
+            }
         }
 
         protected void StopMovement()
@@ -189,12 +204,25 @@ namespace TD.Enemies
 
         public virtual void TakeDamage(float amount)
         {
+            ApplyFinalDamage(amount, false);
+        }
+
+        protected void ApplyFinalDamage(float amount, bool wasReduced)
+        {
             if (IsDead || amount <= 0f)
             {
                 return;
             }
 
-            currentHp -= amount;
+            currentHp = Mathf.Max(0f, currentHp - amount);
+            OnHealthChanged?.Invoke(currentHp, data.maxHp);
+            OnDamaged?.Invoke(amount, wasReduced);
+
+            if (damagePopupPrefab != null)
+            {
+                DamagePopup.Spawn(damagePopupPrefab, transform.position + Vector3.up * 1.4f, amount, wasReduced);
+            }
+
             if (currentHp <= 0f)
             {
                 Die();

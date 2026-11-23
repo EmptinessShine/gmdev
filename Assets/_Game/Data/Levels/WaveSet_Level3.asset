@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74478156acc618a46a1594089008a9e3, type: 3}
+  m_Name: WaveSet_Level3
+  m_EditorClassIdentifier: Assembly-CSharp::TD.Data.WaveSetData
+  waves:
+  - waveName: Wave 1
+    entries:
+    - enemyPrefab: {fileID: 4774240405803856411, guid: 72c29c1feaf00eb42b6e18a172646b97, type: 3}
+      count: 8
+      spawnInterval: 1
+    - enemyPrefab: {fileID: 3524597745528526600, guid: aee8a19fb4f15c0498fa2028fa24d04f, type: 3}
+      count: 1
+      spawnInterval: 2
+    delayBeforeNextWave: 3.5
+  - waveName: Wave 2
+    entries:
+    - enemyPrefab: {fileID: 4774240405803856411, guid: 72c29c1feaf00eb42b6e18a172646b97, type: 3}
+      count: 8
+      spawnInterval: 0.9
+    - enemyPrefab: {fileID: 2220362228617727308, guid: e7417209e125d6b4bb216153357e0de9, type: 3}
+      count: 3
+      spawnInterval: 1.6
+    delayBeforeNextWave: 4
+  - waveName: Wave 3
+    entries:
+    - enemyPrefab: {fileID: 3524597745528526600, guid: aee8a19fb4f15c0498fa2028fa24d04f, type: 3}
+      count: 4
+      spawnInterval: 1.7
+    - enemyPrefab: {fileID: 4774240405803856411, guid: 72c29c1feaf00eb42b6e18a172646b97, type: 3}
+      count: 8
+      spawnInterval: 0.8
+    delayBeforeNextWave: 4
+  - waveName: Wave 4
+    entries:
+    - enemyPrefab: {fileID: 3524597745528526600, guid: aee8a19fb4f15c0498fa2028fa24d04f, type: 3}
+      count: 5
+      spawnInterval: 1.5
+    - enemyPrefab: {fileID: 2220362228617727308, guid: e7417209e125d6b4bb216153357e0de9, type: 3}
+      count: 4
+      spawnInterval: 1.4
+    delayBeforeNextWave: 4
+  - waveName: Wave 5
+    entries:
+    - enemyPrefab: {fileID: 4774240405803856411, guid: 72c29c1feaf00eb42b6e18a172646b97, type: 3}
+      count: 12
+      spawnInterval: 0.65
+    - enemyPrefab: {fileID: 3524597745528526600, guid: aee8a19fb4f15c0498fa2028fa24d04f, type: 3}
+      count: 5
+      spawnInterval: 1.4
+    - enemyPrefab: {fileID: 2220362228617727308, guid: e7417209e125d6b4bb216153357e0de9, type: 3}
+      count: 5
+      spawnInterval: 1.3
+    delayBeforeNextWave: 4.5
+  - waveName: Wave 6
+    entries:
+    - enemyPrefab: {fileID: 3524597745528526600, guid: aee8a19fb4f15c0498fa2028fa24d04f, type: 3}
+      count: 6
+      spawnInterval: 1.3
+    - enemyPrefab: {fileID: 2220362228617727308, guid: e7417209e125d6b4bb216153357e0de9, type: 3}
+      count: 6
+      spawnInterval: 1.2
+    - enemyPrefab: {fileID: 4774240405803856411, guid: 72c29c1feaf00eb42b6e18a172646b97, type: 3}
+      count: 14
+      spawnInterval: 0.55
+    delayBeforeNextWave: 0

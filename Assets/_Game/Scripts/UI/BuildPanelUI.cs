@@ -22,6 +22,7 @@ namespace TD.UI
 
         [Header("Manage Buttons")]
         [SerializeField] private TMP_Text towerInfoText;
+        [SerializeField] private TMP_Text towerStatsText;
         [SerializeField] private Button upgradeButton;
         [SerializeField] private TMP_Text upgradeButtonLabel;
         [SerializeField] private Button sellButton;
@@ -172,6 +173,18 @@ namespace TD.UI
                 if (towerInfoText != null)
                 {
                     towerInfoText.text = $"{tower.Data.towerName} (Lv.{tower.LevelNumber})";
+                }
+
+                if (towerStatsText != null)
+                {
+                    TowerLevelStats s = tower.CurrentStats;
+                    string stats = $"DMG: {s.damage:0} | SPD: {s.fireRate:0.#}/s | RNG: {s.range:0.#}";
+                    if (s.slowDuration > 0f && s.slowMultiplier < 1f)
+                    {
+                        int slowPct = Mathf.RoundToInt((1f - s.slowMultiplier) * 100f);
+                        stats += $"\nSLOW: {slowPct}% ({s.slowDuration:0.#}s)";
+                    }
+                    towerStatsText.text = stats;
                 }
 
                 if (upgradeButton != null && upgradeButtonLabel != null)

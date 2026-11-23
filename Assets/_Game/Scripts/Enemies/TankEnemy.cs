@@ -36,12 +36,13 @@ namespace TD.Enemies
                 return;
             }
 
-            if (state == TankState.ShieldedMove)
+            bool shielded = state == TankState.ShieldedMove;
+            if (shielded)
             {
                 amount *= 1f - data.shieldDamageReduction;
             }
 
-            base.TakeDamage(amount);
+            ApplyFinalDamage(amount, shielded);
 
             if (!IsDead && state == TankState.Move && shieldCooldownTimer <= 0f)
             {

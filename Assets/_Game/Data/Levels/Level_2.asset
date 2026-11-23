@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5719dc422f5b59e4799461568194fa41, type: 3}
+  m_Name: Level_2
+  m_EditorClassIdentifier: Assembly-CSharp::TD.Data.LevelData
+  levelIndex: 1
+  levelName: 'Level 2: Twin Gates'
+  startingGold: 125
+  startingBaseHp: 20
+  groundColor: {r: 0.17, g: 0.2, b: 0.26, a: 1}
+  spawnPosition: {x: -9.2, y: 0, z: 0}
+  basePosition: {x: 9.2, y: 0, z: 0}
+  interiorWalls:
+  - position: {x: -3.5, y: 0.75, z: 4.5}
+    scale: {x: 1, y: 1.5, z: 5}
+  - position: {x: -3.5, y: 0.75, z: -4.5}
+    scale: {x: 1, y: 1.5, z: 5}
+  - position: {x: 3.5, y: 0.75, z: 0}
+    scale: {x: 1, y: 1.5, z: 6.4}
+  slotPositions:
+  - {x: -4.8, y: 0, z: 3.6}
+  - {x: -4.8, y: 0, z: -3.6}
+  - {x: -2.2, y: 0, z: 3.6}
+  - {x: -2.2, y: 0, z: -3.6}
+  - {x: 2.2, y: 0, z: 1.8}
+  - {x: 2.2, y: 0, z: -1.8}
+  - {x: 4.8, y: 0, z: 1.8}
+  - {x: 4.8, y: 0, z: -1.8}
+  waveSet: {fileID: 11400000, guid: 0a9d192674bb9174284dcdd13a9aac50, type: 2}
