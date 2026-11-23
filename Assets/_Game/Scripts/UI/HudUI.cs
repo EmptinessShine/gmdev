@@ -11,6 +11,7 @@ namespace TD.UI
         [SerializeField] private TMP_Text goldText;
         [SerializeField] private TMP_Text baseHpText;
         [SerializeField] private TMP_Text enemiesText;
+        [SerializeField] private TMP_Text waveText;
 
         [Header("Pause")]
         [SerializeField] private Button pauseButton;
@@ -35,6 +36,7 @@ namespace TD.UI
             gm.OnGoldChanged += UpdateGold;
             gm.OnBaseHpChanged += UpdateBaseHp;
             gm.OnEnemiesChanged += UpdateEnemies;
+            gm.OnWaveChanged += UpdateWave;
             gm.OnStateChanged += UpdateStatePanels;
 
             if (pauseButton != null) pauseButton.onClick.AddListener(gm.TogglePause);
@@ -46,6 +48,7 @@ namespace TD.UI
             UpdateGold(gm.Gold);
             UpdateBaseHp(gm.BaseHp);
             UpdateEnemies(gm.RemainingEnemies);
+            UpdateWave(gm.CurrentWave, gm.TotalWaves);
             UpdateStatePanels(gm.State);
         }
 
@@ -60,6 +63,7 @@ namespace TD.UI
             gm.OnGoldChanged -= UpdateGold;
             gm.OnBaseHpChanged -= UpdateBaseHp;
             gm.OnEnemiesChanged -= UpdateEnemies;
+            gm.OnWaveChanged -= UpdateWave;
             gm.OnStateChanged -= UpdateStatePanels;
         }
 
@@ -76,6 +80,14 @@ namespace TD.UI
         private void UpdateEnemies(int remaining)
         {
             if (enemiesText != null) enemiesText.text = $"Enemies: {remaining}";
+        }
+
+        private void UpdateWave(int current, int total)
+        {
+            if (waveText != null)
+            {
+                waveText.text = total > 0 ? $"Wave: {current}/{total}" : string.Empty;
+            }
         }
 
         private void UpdateStatePanels(GameState state)

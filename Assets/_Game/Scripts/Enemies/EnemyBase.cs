@@ -10,6 +10,9 @@ namespace TD.Enemies
     public class EnemyBase : MonoBehaviour
     {
         [SerializeField] protected EnemyData data;
+        [SerializeField] protected AudioSource audioSource;
+        [SerializeField] protected AudioClip windUpClip;
+        [SerializeField] protected Transform visualRoot;
 
         protected NavMeshAgent agent;
         protected Transform baseTarget;
@@ -17,15 +20,24 @@ namespace TD.Enemies
         protected float slowTimer;
         protected float currentSlowMultiplier = 1f;
         protected float attackTimer;
+        protected Vector3 initialVisualScale;
+
+        private static AudioClip fallbackWindUpBeep;
+        private Vector3 lastPosition;
 
         public bool IsDead { get; private set; }
+        public float DistanceTraveled { get; private set; }
         public EnemyData Data => data;
 
         public event Action<EnemyBase> OnDied;
+        public event Action OnWindUpStarted;
+        public event Action OnAttackPerformed;
 
         protected virtual void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
+            if (audioSource == null) audioSource = GetComponent<AudioSource>();
+            initialVisualScale = visualRoot != null ? visualRoot.localScale : transform.localScale;
         }
 
         public virtual void Initialize(Transform targetBase)
@@ -35,9 +47,12 @@ namespace TD.Enemies
             currentSlowMultiplier = 1f;
             slowTimer = 0f;
             attackTimer = 0f;
+            DistanceTraveled = 0f;
+            lastPosition = transform.position;
 
             agent.speed = data.moveSpeed;
             agent.stoppingDistance = data.attackRange;
+            SetVisualPulse(1f);
 
             if (baseTarget != null)
             {
@@ -51,6 +66,9 @@ namespace TD.Enemies
             {
                 return;
             }
+
+            DistanceTraveled += Vector3.Distance(transform.position, lastPosition);
+            lastPosition = transform.position;
 
             UpdateSlow();
             UpdateBehavior();
@@ -78,24 +96,95 @@ namespace TD.Enemies
                 return;
             }
 
-            float sqrDist = (baseTarget.position - transform.position).sqrMagnitude;
-            float sqrRange = data.attackRange * data.attackRange;
-
-            if (sqrDist <= sqrRange)
+            if (IsInBaseAttackRange())
             {
-                agent.isStopped = true;
+                StopMovement();
                 attackTimer -= Time.deltaTime;
                 if (attackTimer <= 0f)
                 {
-                    GameManager.Instance.DamageBase(data.baseDamage);
+                    DealBaseDamage();
                     attackTimer = data.attackCooldown;
                 }
             }
             else
             {
-                agent.isStopped = false;
-                agent.SetDestination(baseTarget.position);
+                MoveToBase();
             }
+        }
+
+        protected bool IsInBaseAttackRange()
+        {
+            if (baseTarget == null || data == null) return false;
+            float sqrDist = (baseTarget.position - transform.position).sqrMagnitude;
+            return sqrDist <= data.attackRange * data.attackRange;
+        }
+
+        protected bool IsOnScreen()
+        {
+            Camera cam = Camera.main;
+            if (cam == null) return true;
+            Vector3 vp = cam.WorldToViewportPoint(transform.position);
+            return vp.z > 0f && vp.x >= 0.02f && vp.x <= 0.98f && vp.y >= 0.02f && vp.y <= 0.98f;
+        }
+
+        protected void MoveToBase()
+        {
+            if (baseTarget == null || !agent.isOnNavMesh) return;
+            agent.isStopped = false;
+            agent.SetDestination(baseTarget.position);
+        }
+
+        protected void StopMovement()
+        {
+            if (agent.isOnNavMesh)
+            {
+                agent.isStopped = true;
+            }
+        }
+
+        protected void DealBaseDamage()
+        {
+            if (GameManager.Instance != null && data != null)
+            {
+                GameManager.Instance.DamageBase(data.baseDamage);
+            }
+
+            OnAttackPerformed?.Invoke();
+        }
+
+        protected void TriggerWindUpFeedback(float pitch = 1f)
+        {
+            OnWindUpStarted?.Invoke();
+            if (audioSource == null) return;
+
+            AudioClip clip = windUpClip != null ? windUpClip : GetFallbackBeep();
+            audioSource.pitch = pitch;
+            audioSource.PlayOneShot(clip, 0.45f);
+        }
+
+        protected void SetVisualPulse(float scaleMultiplier)
+        {
+            Transform target = visualRoot != null ? visualRoot : transform;
+            target.localScale = initialVisualScale * scaleMultiplier;
+        }
+
+        private static AudioClip GetFallbackBeep()
+        {
+            if (fallbackWindUpBeep != null) return fallbackWindUpBeep;
+
+            const int sampleRate = 22050;
+            int length = Mathf.RoundToInt(sampleRate * 0.14f);
+            float[] samples = new float[length];
+            for (int i = 0; i < length; i++)
+            {
+                float t = (float)i / sampleRate;
+                float env = 1f - (float)i / length;
+                samples[i] = Mathf.Sin(2f * Mathf.PI * 440f * t) * env * 0.35f;
+            }
+
+            fallbackWindUpBeep = AudioClip.Create("WindUpBeep", length, 1, sampleRate, false);
+            fallbackWindUpBeep.SetData(samples, 0);
+            return fallbackWindUpBeep;
         }
 
         public virtual void TakeDamage(float amount)

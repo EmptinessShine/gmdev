@@ -12,9 +12,12 @@ namespace TD.Towers
         [SerializeField] private Transform turretHead;
         [SerializeField] private Transform firePoint;
         [SerializeField] private GameObject[] levelVisuals;
+        [SerializeField] private GameObject frozenVisual;
+        [SerializeField] private RangeIndicator rangeIndicator;
 
         private float fireCooldown;
         private float freezeTimer;
+        private bool isRangeVisible;
 
         public TowerData Data { get; private set; }
         public int LevelIndex { get; private set; }
@@ -25,6 +28,7 @@ namespace TD.Towers
         public bool IsFrozen => freezeTimer > 0f;
 
         public event Action OnFired;
+        public event Action<float> OnFrozen;
 
         public void Initialize(TowerData towerData)
         {
@@ -33,7 +37,27 @@ namespace TD.Towers
             TotalInvestedGold = CurrentStats.cost;
             fireCooldown = 0f;
             freezeTimer = 0f;
+            if (frozenVisual != null) frozenVisual.SetActive(false);
+            SetRangeVisible(false);
             ApplyLevelVisual();
+        }
+
+        public void SetRangeVisible(bool visible)
+        {
+            isRangeVisible = visible;
+            if (rangeIndicator == null)
+            {
+                return;
+            }
+
+            if (visible && Data != null)
+            {
+                rangeIndicator.Show(CurrentStats.range);
+            }
+            else
+            {
+                rangeIndicator.Hide();
+            }
         }
 
         public int GetNextUpgradeCost()
@@ -51,6 +75,10 @@ namespace TD.Towers
             LevelIndex++;
             TotalInvestedGold += CurrentStats.cost;
             ApplyLevelVisual();
+            if (isRangeVisible && rangeIndicator != null)
+            {
+                rangeIndicator.Show(CurrentStats.range);
+            }
         }
 
         public void ApplyFreeze(float duration)
@@ -61,6 +89,8 @@ namespace TD.Towers
             }
 
             freezeTimer = Mathf.Max(freezeTimer, duration);
+            if (frozenVisual != null) frozenVisual.SetActive(true);
+            OnFrozen?.Invoke(duration);
         }
 
         private void ApplyLevelVisual()
@@ -92,11 +122,15 @@ namespace TD.Towers
             if (freezeTimer > 0f)
             {
                 freezeTimer -= Time.deltaTime;
+                if (freezeTimer <= 0f && frozenVisual != null)
+                {
+                    frozenVisual.SetActive(false);
+                }
                 return;
             }
 
             fireCooldown -= Time.deltaTime;
-            EnemyBase target = FindNearestTarget();
+            EnemyBase target = FindFirstTarget();
             if (target == null)
             {
                 return;
@@ -111,11 +145,11 @@ namespace TD.Towers
             }
         }
 
-        private EnemyBase FindNearestTarget()
+        private EnemyBase FindFirstTarget()
         {
             Collider[] hits = Physics.OverlapSphere(transform.position, CurrentStats.range, enemyLayer);
-            EnemyBase nearest = null;
-            float bestSqrDist = float.MaxValue;
+            EnemyBase firstEnemy = null;
+            float bestDistance = float.MinValue;
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -125,15 +159,14 @@ namespace TD.Towers
                     continue;
                 }
 
-                float sqrDist = (enemy.transform.position - transform.position).sqrMagnitude;
-                if (sqrDist < bestSqrDist)
+                if (enemy.DistanceTraveled > bestDistance)
                 {
-                    bestSqrDist = sqrDist;
-                    nearest = enemy;
+                    bestDistance = enemy.DistanceTraveled;
+                    firstEnemy = enemy;
                 }
             }
 
-            return nearest;
+            return firstEnemy;
         }
 
         private void RotateToward(Vector3 worldPos)

@@ -33,7 +33,7 @@ All inherit from lightweight `EnemyBase`, separate behavior scripts, 3+ FSM stat
 ## Roadmap
 - [x] **Stage 0:** Unity 6 URP project, Android Landscape, New Input System, AI Navigation, folders, Git, `DECISIONS.md`, `README.md`
 - [x] **Stage 1 (MVP):** Arena, NavMesh, Base HP, slots, 3 towers (build/upgrade/sell), HUD, Pause
-- [ ] **Stage 2 (A10):** Runner, Tank, Frost Mage, waves, balance
+- [x] **Stage 2 (A10):** Runner, Tank, Frost Mage, waves, balance
 - [ ] **Stage 3 (A11):** ScriptableObjects, 3 `LevelData`, JSON saves, Level Select, Reset
 - [ ] **Stage 4 (A12):** AudioMixer, 8+ SFX, 2 music tracks, settings dB sliders, licenses
 - [ ] **Stage 5 (A13):** Particles, Shader Graph, URP Volume, Shake, Hit Stop, FPS & profiling

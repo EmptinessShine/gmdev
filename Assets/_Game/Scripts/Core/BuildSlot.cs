@@ -9,6 +9,8 @@ namespace TD.Core
         [SerializeField] private Transform towerAnchor;
         [SerializeField] private GameObject highlightVisual;
 
+        private bool isSelected;
+
         public Tower CurrentTower { get; private set; }
         public bool IsOccupied => CurrentTower != null;
 
@@ -19,9 +21,15 @@ namespace TD.Core
 
         public void SetSelected(bool selected)
         {
+            isSelected = selected;
             if (highlightVisual != null)
             {
                 highlightVisual.SetActive(selected);
+            }
+
+            if (IsOccupied)
+            {
+                CurrentTower.SetRangeVisible(selected);
             }
         }
 
@@ -41,6 +49,7 @@ namespace TD.Core
             Transform anchor = towerAnchor != null ? towerAnchor : transform;
             CurrentTower = Instantiate(towerData.prefab, anchor.position, anchor.rotation);
             CurrentTower.Initialize(towerData);
+            CurrentTower.SetRangeVisible(isSelected);
             return true;
         }
 

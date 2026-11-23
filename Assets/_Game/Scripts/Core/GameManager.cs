@@ -23,11 +23,14 @@ namespace TD.Core
         public int Gold { get; private set; }
         public int BaseHp { get; private set; }
         public int RemainingEnemies { get; private set; }
+        public int CurrentWave { get; private set; }
+        public int TotalWaves { get; private set; }
         public GameState State { get; private set; }
 
         public event Action<int> OnGoldChanged;
         public event Action<int> OnBaseHpChanged;
         public event Action<int> OnEnemiesChanged;
+        public event Action<int, int> OnWaveChanged;
         public event Action<GameState> OnStateChanged;
 
         private void Awake()
@@ -55,6 +58,13 @@ namespace TD.Core
         {
             RemainingEnemies = Mathf.Max(0, count);
             OnEnemiesChanged?.Invoke(RemainingEnemies);
+        }
+
+        public void SetWaveProgress(int current, int total)
+        {
+            CurrentWave = Mathf.Max(0, current);
+            TotalWaves = Mathf.Max(0, total);
+            OnWaveChanged?.Invoke(CurrentWave, TotalWaves);
         }
 
         public bool TrySpendGold(int amount)

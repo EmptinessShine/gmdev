@@ -19,7 +19,7 @@ MonoBehaviour:
   - cost: 80
     damage: 35
     fireRate: 0.7
-    range: 10
+    range: 8.5
     projectileSpeed: 26
     slowMultiplier: 1
     slowDuration: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   - cost: 90
     damage: 55
     fireRate: 0.85
-    range: 11
+    range: 9.5
     projectileSpeed: 28
     slowMultiplier: 1
     slowDuration: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
   - cost: 110
     damage: 85
     fireRate: 1
-    range: 12
+    range: 10.5
     projectileSpeed: 30
     slowMultiplier: 1
     slowDuration: 0
