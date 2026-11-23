@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfc56900b3b44d4f8a44b3532eb6166, type: 3}
+  m_Name: Tower_Sniper
+  m_EditorClassIdentifier: Assembly-CSharp::TD.Data.TowerData
+  towerName: Sniper
+  prefab: {fileID: 6005002690351785700, guid: ce1d4db214b294647b38f1871b02ae5a, type: 3}
+  projectilePrefab: {fileID: 2151507226314646046, guid: 38a3f53eea0b73a43bf89a87388b851b, type: 3}
+  levels:
+  - cost: 80
+    damage: 35
+    fireRate: 0.7
+    range: 10
+    projectileSpeed: 26
+    slowMultiplier: 1
+    slowDuration: 0
+    visualScale: 1
+  - cost: 90
+    damage: 55
+    fireRate: 0.85
+    range: 11
+    projectileSpeed: 28
+    slowMultiplier: 1
+    slowDuration: 0
+    visualScale: 1.15
+  - cost: 110
+    damage: 85
+    fireRate: 1
+    range: 12
+    projectileSpeed: 30
+    slowMultiplier: 1
+    slowDuration: 0
+    visualScale: 1.3
