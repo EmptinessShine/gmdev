@@ -1,7 +1,7 @@
 # Tower Defense RK2 — Project Spec
 
 ## Tech Stack
-- **Engine:** Unity `6000.6.0f1` (Universal 3D / URP)
+- **Engine:** Unity `6000.6.7f1` (Universal 3D / URP, Windows & Mac sync)
 - **Platform:** Android (APK, Landscape, 30+ FPS)
 - **Input:** Unity New Input System
 - **Navigation:** AI Navigation (`NavMeshSurface` + `NavMeshAgent`)
@@ -13,7 +13,7 @@
 - **Towers (3 types, 3 upgrade levels each):**
   1. Gunner (fast, cheap)
   2. Sniper (long range, high damage)
-  3. Slow OR Splash *(TBD before Stage 1)*
+  3. Slow (slows enemies)
 - **Tower Actions:** Build, Upgrade (Lvl 1→2→3), Sell (no moving)
 - **Economy:** Gold granted automatically on kill (+ pickup particle & SFX)
 - **Win / Lose:** Clear all waves with Base HP > 0 / Base HP reaches 0
@@ -31,7 +31,7 @@ All inherit from lightweight `EnemyBase`, separate behavior scripts, 3+ FSM stat
 - **A13:** Particles on 5+ events, 1 Shader Graph (`MaterialPropertyBlock` hit flash), URP Volume (Bloom, Color Adjustments, Vignette), Screen Shake, Hit Stop (~0.05 s, safe `Time.timeScale` restore), before/after toggle + FPS counter (30+ FPS on Android).
 
 ## Roadmap
-- [ ] **Stage 0:** Unity 6 URP project, Android Landscape, New Input System, AI Navigation, folders, Git, `DECISIONS.md`, `README.md`
+- [x] **Stage 0:** Unity 6 URP project, Android Landscape, New Input System, AI Navigation, folders, Git, `DECISIONS.md`, `README.md`
 - [ ] **Stage 1 (MVP):** Arena, NavMesh, Base HP, slots, 3 towers (build/upgrade/sell), HUD, Pause
 - [ ] **Stage 2 (A10):** Runner, Tank, Frost Mage, waves, balance
 - [ ] **Stage 3 (A11):** ScriptableObjects, 3 `LevelData`, JSON saves, Level Select, Reset
