@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2947031084737930775}
   - component: {fileID: 6328015913833100134}
   - component: {fileID: 4774240405803856411}
+  - component: {fileID: 5516385873423072475}
   m_Layer: 7
   m_Name: Enemy_Runner
   m_TagString: Untagged
@@ -254,6 +255,20 @@ MonoBehaviour:
   windUpClip: {fileID: 8300000, guid: 2bf38e586550bdf4aa7fd5dd86c3efff, type: 3}
   visualRoot: {fileID: 0}
   damagePopupPrefab: {fileID: 1609110006452894811, guid: f1b13193b60570a48849c184181c13c8, type: 3}
+--- !u!114 &5516385873423072475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139081667624803366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e34be357e0585d44ab0300ceafe6be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TD.VFX.HitFlash
+  targetRenderer: {fileID: 8682816456402591870}
+  flashDuration: 0.1
 --- !u!1 &1871491064422293324
 GameObject:
   m_ObjectHideFlags: 0

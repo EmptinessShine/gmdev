@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using TD.Audio;
 using TD.Data;
 using TD.Save;
+using TD.VFX;
 
 namespace TD.Core
 {
@@ -115,6 +116,7 @@ namespace TD.Core
 
             BaseHp = Mathf.Max(0, BaseHp - damage);
             OnBaseHpChanged?.Invoke(BaseHp);
+            JuiceManager.Instance?.PlayBaseDamaged();
 
             if (BaseHp <= 0)
             {
@@ -195,7 +197,12 @@ namespace TD.Core
             }
 
             State = newState;
-            if (State == GameState.Won) AudioManager.Instance?.PlayWin();
+            if (State == GameState.Won)
+            {
+                AudioManager.Instance?.PlayWin();
+                Vector3 winPos = levelLoader != null ? levelLoader.BasePosition : Vector3.zero;
+                JuiceManager.Instance?.PlayWin(winPos);
+            }
             else if (State == GameState.Lost) AudioManager.Instance?.PlayLose();
             OnStateChanged?.Invoke(State);
         }

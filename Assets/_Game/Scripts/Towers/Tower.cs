@@ -4,6 +4,7 @@ using TD.Audio;
 using TD.Core;
 using TD.Data;
 using TD.Enemies;
+using TD.VFX;
 
 namespace TD.Towers
 {
@@ -92,6 +93,7 @@ namespace TD.Towers
             freezeTimer = Mathf.Max(freezeTimer, duration);
             if (frozenVisual != null) frozenVisual.SetActive(true);
             AudioManager.Instance?.PlayFreeze();
+            JuiceManager.Instance?.PlayFreeze(transform.position + Vector3.up * 0.8f);
             OnFrozen?.Invoke(duration);
         }
 

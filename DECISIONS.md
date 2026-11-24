@@ -29,3 +29,9 @@
 - **Проблемы / баги:** (1) ручная настройка микшера и конфликт `System.Object` в `Stage4A12Setup.cs`; (2) `?.` по уничтоженному `AudioManager.Instance` вызывал `MissingReferenceException` при повторном Play Mode.
 - **Что изменили:** Сгенерировали 16 CC0 `.wav`-файлов (2 лупа + 14 SFX), настроили `MainAudioMixer.mixer` (`Music/SFX`, `Lowpass Simple`, `Normal/Paused`, exposed-параметры), добавили слайдеры в `MainMenu` и `PausePanel`, маршрутизировали `AudioSource` врагов в `SFX`, добавили сброс статики в `OnDestroy` и `SubsystemRegistration` у всех синглтонов.
 - **Проверка:** Все `.meta`-файлы сгенерированы, проект чисто закоммичен для переноса на Mac и перехода к Этапу 5 (A13 — Juice Pass).
+
+## Stage 5 — A13 (Juice Pass: Particles, Shader Graph, URP Volume, Shake, Hit Stop, FPS)
+- **Просили:** Частицы на 5+ событиях, 1 URP Shader Graph (`Hit Flash` через `MaterialPropertyBlock`), URP Volume (`Bloom`, `Color Adjustments`, `Vignette`), Screen Shake, Hit Stop (`~0.05 с` с безопасным восстановлением `Time.timeScale`), переключатель «до/после» (`Juice: ON/OFF`) и счетчик FPS.
+- **Подход и инструменты:** Сгенерировали нативный URP 17.6 `SG_HitFlash.shadergraph` на базе шаблона Unity 6, собрали 6 префабов частиц (`Hit`, `Pickup`, `Death`, `Build`, `Freeze`, `Win`), а сборку и проверку сцены выполнили прямо в редакторе через `unity` MCP (`0` ошибок компиляции).
+- **Безопасность и оптимизация:** `HitFlash` работает через `MaterialPropertyBlock` (без копирования материалов); `HitStop` срабатывает только на тяжелых событиях (смерть Танка, урон базе), уважает `GameState.Paused` и гарантированно сбрасывает `Time.timeScale = 1f` в `OnDisable`/`OnDestroy`.
+- **Проверка:** Все эффекты, переключатель `Juice: ON/OFF` (сохраняется в `save.json`), пауза и счетчик FPS протестированы в Play Mode без ошибок.

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TD.Audio;
 using TD.Core;
+using TD.VFX;
 
 namespace TD.UI
 {
@@ -14,6 +15,10 @@ namespace TD.UI
         [SerializeField] private TMP_Text enemiesText;
         [SerializeField] private TMP_Text waveText;
         [SerializeField] private TMP_Text levelText;
+
+        [Header("Juice Toggle")]
+        [SerializeField] private Button juiceToggleButton;
+        [SerializeField] private TMP_Text juiceToggleLabel;
 
         [Header("Pause")]
         [SerializeField] private Button pauseButton;
@@ -55,6 +60,21 @@ namespace TD.UI
             if (loseRestartButton != null) loseRestartButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.RestartLevel(); });
             if (loseMenuButton != null) loseMenuButton.onClick.AddListener(() => { AudioManager.Instance?.PlayUIClick(); gm.ReturnToMenu(); });
 
+            if (juiceToggleButton != null)
+            {
+                juiceToggleButton.onClick.AddListener(() =>
+                {
+                    AudioManager.Instance?.PlayUIClick();
+                    JuiceManager.Instance?.ToggleJuice();
+                });
+            }
+
+            if (JuiceManager.Instance != null)
+            {
+                JuiceManager.Instance.OnJuiceToggled += UpdateJuiceToggle;
+                UpdateJuiceToggle(JuiceManager.Instance.JuiceEnabled);
+            }
+
             if (levelText != null && gm.ActiveLevel != null)
             {
                 levelText.text = gm.ActiveLevel.levelName;
@@ -80,6 +100,28 @@ namespace TD.UI
             gm.OnEnemiesChanged -= UpdateEnemies;
             gm.OnWaveChanged -= UpdateWave;
             gm.OnStateChanged -= UpdateStatePanels;
+
+            if (JuiceManager.Instance != null)
+            {
+                JuiceManager.Instance.OnJuiceToggled -= UpdateJuiceToggle;
+            }
+        }
+
+        private void UpdateJuiceToggle(bool enabled)
+        {
+            if (juiceToggleLabel != null)
+            {
+                juiceToggleLabel.text = enabled ? "Juice: ON" : "Juice: OFF";
+            }
+
+            if (juiceToggleButton != null)
+            {
+                Image img = juiceToggleButton.GetComponent<Image>();
+                if (img != null)
+                {
+                    img.color = enabled ? new Color(0.18f, 0.52f, 0.32f) : new Color(0.32f, 0.34f, 0.38f);
+                }
+            }
         }
 
         private void UpdateGold(int gold)

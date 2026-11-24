@@ -2,6 +2,7 @@ using UnityEngine;
 using TD.Audio;
 using TD.Data;
 using TD.Towers;
+using TD.VFX;
 
 namespace TD.Core
 {
@@ -52,6 +53,7 @@ namespace TD.Core
             CurrentTower.Initialize(towerData);
             CurrentTower.SetRangeVisible(isSelected);
             AudioManager.Instance?.PlayBuild();
+            JuiceManager.Instance?.PlayBuildOrUpgrade(anchor.position);
             return true;
         }
 
@@ -70,6 +72,8 @@ namespace TD.Core
 
             CurrentTower.Upgrade();
             AudioManager.Instance?.PlayUpgrade();
+            Transform anchor = towerAnchor != null ? towerAnchor : transform;
+            JuiceManager.Instance?.PlayBuildOrUpgrade(anchor.position);
             return true;
         }
 

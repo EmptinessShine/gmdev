@@ -5,6 +5,7 @@ using TD.Audio;
 using TD.Core;
 using TD.Data;
 using TD.UI;
+using TD.VFX;
 
 namespace TD.Enemies
 {
@@ -24,6 +25,7 @@ namespace TD.Enemies
         protected float currentSlowMultiplier = 1f;
         protected float attackTimer;
         protected Vector3 initialVisualScale;
+        protected HitFlash hitFlash;
 
         private static AudioClip fallbackWindUpBeep;
         private Vector3 lastPosition;
@@ -42,6 +44,7 @@ namespace TD.Enemies
         {
             agent = GetComponent<NavMeshAgent>();
             if (audioSource == null) audioSource = GetComponent<AudioSource>();
+            hitFlash = GetComponent<HitFlash>();
             initialVisualScale = visualRoot != null ? visualRoot.localScale : transform.localScale;
         }
 
@@ -225,6 +228,8 @@ namespace TD.Enemies
             }
 
             AudioManager.Instance?.PlayHit();
+            hitFlash?.TriggerFlash();
+            JuiceManager.Instance?.PlayHit(transform.position + Vector3.up * 0.6f);
 
             if (currentHp <= 0f)
             {
@@ -262,6 +267,8 @@ namespace TD.Enemies
 
             AudioManager.Instance?.PlayDeath();
             AudioManager.Instance?.PlayPickup();
+            JuiceManager.Instance?.PlayDeath(transform.position + Vector3.up * 0.6f, this is TankEnemy);
+            JuiceManager.Instance?.PlayPickup(transform.position + Vector3.up * 0.9f);
 
             OnDied?.Invoke(this);
             Destroy(gameObject);

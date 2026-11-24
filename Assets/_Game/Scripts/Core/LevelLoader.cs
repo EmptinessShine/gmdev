@@ -20,6 +20,7 @@ namespace TD.Core
         [SerializeField] private WaveSpawner waveSpawner;
 
         public LevelData ActiveLevel { get; private set; }
+        public Vector3 BasePosition => basePoint != null ? basePoint.position : Vector3.zero;
 
         public LevelData LoadActiveLevel()
         {

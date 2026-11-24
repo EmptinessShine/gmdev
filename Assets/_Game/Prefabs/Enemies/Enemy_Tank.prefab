@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 7686834370243617406}
   - component: {fileID: 1919956796420632451}
   - component: {fileID: 3524597745528526600}
+  - component: {fileID: 878020012201612008}
   m_Layer: 7
   m_Name: Enemy_Tank
   m_TagString: Untagged
@@ -576,3 +577,17 @@ MonoBehaviour:
   visualRoot: {fileID: 0}
   damagePopupPrefab: {fileID: 1609110006452894811, guid: f1b13193b60570a48849c184181c13c8, type: 3}
   shieldVisual: {fileID: 341532525726874278}
+--- !u!114 &878020012201612008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9101071509124439485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e34be357e0585d44ab0300ceafe6be5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TD.VFX.HitFlash
+  targetRenderer: {fileID: 4988095183459477583}
+  flashDuration: 0.1
