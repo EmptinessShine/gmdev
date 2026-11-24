@@ -349,7 +349,7 @@ namespace TD.EditorTools
                 cam.backgroundColor = new Color(0.12f, 0.14f, 0.18f);
             }
 
-            Light dirLight = Object.FindFirstObjectByType<Light>();
+            Light dirLight = Object.FindAnyObjectByType<Light>();
             if (dirLight != null)
             {
                 dirLight.transform.rotation = Quaternion.Euler(50f, -30f, 0f);

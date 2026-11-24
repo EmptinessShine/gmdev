@@ -31,7 +31,7 @@ MonoBehaviour:
     projectileSpeed: 16
     slowMultiplier: 0.45
     slowDuration: 2.5
-    visualScale: 1.15
+    visualScale: 1.04
   - cost: 95
     damage: 15
     fireRate: 1.6
@@ -39,4 +39,4 @@ MonoBehaviour:
     projectileSpeed: 18
     slowMultiplier: 0.35
     slowDuration: 3
-    visualScale: 1.3
+    visualScale: 1.08

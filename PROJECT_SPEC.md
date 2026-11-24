@@ -37,4 +37,4 @@ All inherit from lightweight `EnemyBase`, separate behavior scripts, 3+ FSM stat
 - [x] **Stage 3 (A11):** ScriptableObjects, 3 `LevelData`, JSON saves, Level Select, Reset
 - [x] **Stage 4 (A12):** AudioMixer, 8+ SFX, 2 music tracks, settings dB sliders, licenses
 - [x] **Stage 5 (A13):** Particles, Shader Graph, URP Volume, Shake, Hit Stop, FPS & profiling
-- [ ] **Stage 6:** Replace primitives with upgraded models
+- [x] **Stage 6:** Replace primitives with upgraded models

@@ -35,3 +35,8 @@
 - **Подход и инструменты:** Сгенерировали нативный URP 17.6 `SG_HitFlash.shadergraph` на базе шаблона Unity 6, собрали 6 префабов частиц (`Hit`, `Pickup`, `Death`, `Build`, `Freeze`, `Win`), а сборку и проверку сцены выполнили прямо в редакторе через `unity` MCP (`0` ошибок компиляции).
 - **Безопасность и оптимизация:** `HitFlash` работает через `MaterialPropertyBlock` (без копирования материалов); `HitStop` срабатывает только на тяжелых событиях (смерть Танка, урон базе), уважает `GameState.Paused` и гарантированно сбрасывает `Time.timeScale = 1f` в `OnDisable`/`OnDestroy`.
 - **Проверка:** Все эффекты, переключатель `Juice: ON/OFF` (сохраняется в `save.json`), пауза и счетчик FPS протестированы в Play Mode без ошибок.
+
+## Stage 6 — Low-Poly 3D Models, Android APK & Script Map
+- **Просили:** Заменить примитивы на 3D-модели с визуальной эволюцией башен `1 → 2 → 3`, проверить сборку Android APK и подготовить Script Map для защиты.
+- **Что сделали:** Сгенерировали в Blender headless 18 Low-Poly `.fbx` моделей (базы и 3 уровня турелей для `Gunner/Sniper/Slow`, `Runner/Tank/FrostMage` с поддержкой `SG_HitFlash`, `BaseCitadel`, `SpawnPortal`, `BuildSlotPad`), настроили материалы/префабы через `Stage6ModelsSetup.cs`, убрали последнее предупреждение компиляции и написали `SCRIPT_MAP.md`.
+- **Проверка:** В Unity Editor 300–400 FPS, апгрейды башен меняют геометрию `LevelVisual_1..3`, Android APK собран без ошибок через `unity` MCP.

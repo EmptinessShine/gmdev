@@ -7,7 +7,7 @@
 - **Платформа:** Android (APK), ориентация Landscape, цель 30+ FPS.
 - **Ввод:** Unity New Input System.
 - **Навигация:** AI Navigation (`NavMeshSurface` + `NavMeshAgent`).
-- **Архитектура и правила:** [PROJECT_SPEC.md](PROJECT_SPEC.md), [unity-architect.md](unity-architect.md), [DECISIONS.md](DECISIONS.md).
+- **Архитектура и правила:** [PROJECT_SPEC.md](PROJECT_SPEC.md), [SCRIPT_MAP.md](SCRIPT_MAP.md), [unity-architect.md](unity-architect.md), [DECISIONS.md](DECISIONS.md).
 
 ## Синхронизация Windows ↔ Mac (Git)
 - В корне настроены `.gitignore` (исключены `Library/`, `UserSettings/`, `Temp/`, `Logs/`, `.utmp/`, сборки) и `.gitattributes` (единый `eol=lf` для текстовых файлов и ассетов Unity).
